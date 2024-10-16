@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using HSZF_FelevesFeladat.Model;
+using System.Xml.Linq;
 
 namespace HSZF_FelevesFeladat
 {
@@ -9,7 +10,7 @@ namespace HSZF_FelevesFeladat
             Console.WriteLine("Hello, World!");
         }
 
-        public void XmlLoad()
+        public List<Employee> XmlLoad()
         {
             // XML file beolvasas
             string filePath = "employees-departments.xml";
@@ -17,29 +18,31 @@ namespace HSZF_FelevesFeladat
 
             //Minden alkalmazott feldolgozasa
             var employees = xmlDoc.Descendants("Employee")
-                .Select(e => new
+                .Select(e => new Employee
                 {
-                    EmployeeId = e.Attribute("employeeid")?.Value,
-                    Name = e.Element("Name")?.Value,
-                    BirthYear = e.Element("BirthYear")?.Value,
-                    StartYear = e.Element("StartYear")?.Value,
-                    ConpletedProjects = e.Element("CompletedProjects")?.Value,
-                    Active = e.Element("Active")?.Value,
-                    Retired = e.Element("Retired")?.Value,
-                    Email = e.Element("Email")?.Value,
-                    Phone = e.Element("Phone")?.Value,
-                    Job = e.Element("Job")?.Value,
-                    Level = e.Element("Level")?.Value,
-                    Salary = e.Element("Salary")?.Value,
-                    Commission = e.Element("Commission")?.Value,
+                    EmployeeId = int.Parse(e.Attribute("employeeid").Value),
+                    Name = e.Element("Name").Value,
+                    BirthYear = int.Parse(e.Element("BirthYear").Value),
+                    StartYear = int.Parse(e.Element("StartYear").Value),
+                    CompletedProjects = int.Parse(e.Element("CompletedProjects").Value),
+                    Active = bool.Parse(e.Element("Active").Value),
+                    Retired = bool.Parse(e.Element("Retired").Value),
+                    Email = e.Element("Email").Value,
+                    Phone = e.Element("Phone").Value,
+                    Job = e.Element("Job").Value,
+                    Level = e.Element("Level").Value,
+                    Salary = int.Parse(e.Element("Salary").Value),
+                    Commission = int.Parse(e.Element("Commission").Value),
                     Departments = e.Element("Departments").Elements("Department")
-                        .Select(d => new
+                        .Select(d => new Department
                         {
-                            DepartmentName = d.Element("Name")?.Value,
-                            DepartmentCode = d.Element("DepartmentCode")?.Value,
-                            HeadfOfDepartment = d.Element("HeadOfDepartment")?.Value,
+                            DepartmentName = d.Element("Name").Value,
+                            DepartmentCode = d.Element("DepartmentCode").Value,
+                            HeadOfDepartment = d.Element("HeadOfDepartment").Value
                         }).ToList()
-                });
+                }).ToList();
+
+            return employees;
         }
     }
 }

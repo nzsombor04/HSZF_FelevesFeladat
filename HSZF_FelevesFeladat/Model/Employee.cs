@@ -19,8 +19,8 @@ namespace HSZF_FelevesFeladat.Model
         public string Phone { get; set; }
         public string Job { get; set; }
         public string Level { get; set; }
-        public decimal Salary { get; set; }
-        public decimal Commission { get; set; }
+        public int Salary { get; set; }
+        public int Commission { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
     }
 }
